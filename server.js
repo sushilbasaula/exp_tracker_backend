@@ -8,12 +8,18 @@ import morgan from "morgan";
 
 //connect mongoDB
 import { connectMongoDB } from "./src/config/dbConfig.js";
-connectMongoDB;
+connectMongoDB();
 
 //middlewares
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+
+//Routers
+import userRouter from "./src/routers/userRouter.js";
+// User Router to handle user registration and login
+app.use("/api/v1/user", userRouter);
+// transaction router to handle all transaction related CRUD operations
 
 // uncaught router request
 app.use("*", (req, res, next) => {
