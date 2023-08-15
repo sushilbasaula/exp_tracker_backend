@@ -5,7 +5,7 @@ export const createUser = (newUserObj) => {
   return UserSchema(newUserObj).save();
 };
 
-// read user @filter munst be an object {}
+// read user @filter must be an object {}
 export const getSingleUser = (filter) => {
   return UserSchema.findOne(filter);
 };

@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser } from "../models/userModel/UserModel.js";
+import { createUser, getSingleUser } from "../models/userModel/UserModel.js";
 
 const router = express.Router();
 
@@ -28,6 +28,31 @@ router.post("/", async (req, res, next) => {
       error.message =
         "This email has been used already,  use different email or reset your password";
     }
+    next(error);
+  }
+});
+
+//login user
+router.post("/login", async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const result = await getSingleUser(req.body);
+    console.log(result);
+    result?._id
+      ? res.json({
+          status: "success",
+          message: "Loged In",
+          result: {
+            _id: result._id,
+            email: result.email,
+            name: result.name,
+          },
+        })
+      : res.json({
+          status: "error",
+          message: "Invalid login",
+        });
+  } catch (error) {
     next(error);
   }
 });
